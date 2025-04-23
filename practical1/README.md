@@ -1,69 +1,86 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Practical Report: Docker Containerization for React.js Application
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+Docker is an open source software platform used to create, deploy and manage virtualized application containers on a common operating system (OS), with an ecosystem of allied tools. 
 
-### `npm start`
+## Containerization
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This is the process of packaging an application and its dependencies (libraries, runtime, system tools, etc.) into a single, self-contained unit called a container. 
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Steps Followed for Docker Containerization Exercise
 
-### `npm test`
+### 1. Installing Dependencies
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![1](./Images/1.png)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The terminal output shows several deprecated packages and warnings related to package versions, which is typical during npm installations. 
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### 2. Docker Build Process
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The Docker build process was executed with:
 
-### `npm run eject`
+![2](./Images/2.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 3. Running Docker Containers
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+After successful build, containers were launched with:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+docker run -d -p 3000:3000 tandinomu/react-app
+```
+![6](./Images/6.png)
+![5](./Images/5.png)
 
-## Learn More
+And later:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+docker run -d -p 81:80 sha256:6c41dda2ab1bb448c413a5f4bfc3e0c6fbeee64b124c52ea2c118ca8cb55e2ce
+```
+![14](./Images/13.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This maps port 81 on the host to port 80 in the container.
 
-### Code Splitting
+### 4. Checking Container Status
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+To verify running containers, the command was used:
 
-### Analyzing the Bundle Size
+```bash
+docker ps
+```
+![8](./Images/8.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+The output shows three containers running:
+- A container with ID starting with 1c7ceb10efc (tandinomu/react-app)
+- A container with ID starting with e0631ff83c75 (reactjs-subdevice-web)
+- A container with ID starting with 6abfd67c6d52 (reactjs-subdevice-test)
 
-### Making a Progressive Web App
+All containers were successfully running with port mapping 3000:3000/tcp for the first two and a unique name for each container.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 
-### Advanced Configuration
+### 5. Running Tests
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+The application has test capability, with a test suite that successfully passed:
 
-### Deployment
+![9](./Images/9.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
 
-### `npm run build` fails to minify
+### 6. Dockerfile for Production
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-"# subdevice" 
+A multi-stage Dockerfile was created to optimize the production build. The screenshot below represents this process, with a successful build producing a container that was then run with port 81 mapped to container port 80.
+
+![10](./Images/10.png)
+ 
+### 7. Verify Running Container
+Access the application in the browser:
+
+```bash
+http://localhost:8082
+```
+![14](./Images/14.png)
+
+## Conclusion
+
+The Docker containerization of the React.js application was successfully completed. The installation of dependencies, building Docker images, and running multiple containers with appropriate port mappings (3000:3000 for development and 81:80 for production) were successful. The multi-stage Dockerfile optimized the production build by reducing image size. All containers ran correctly, and the application's test suite passed, confirming that functionality was preserved during containerization. This exercise demonstrated Docker's effectiveness in creating consistent, portable environments for web application deployment.
