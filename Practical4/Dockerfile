@@ -1,24 +1,30 @@
-# Use an official Node.js runtime as a base image
-FROM node:18-slim
+# Use Node.js 18 as the base image
+FROM node:18-alpine
 
-# Set environment variables
-ENV NODE_ENV=production
-ENV CONTAINER_ID=local
+# Set working directory
+WORKDIR /app
 
-# Set working directory in the container
-WORKDIR /usr/src/app
-
-# Copy package.json and package-lock.json
+# Copy package files
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy next.config.js specifically (make sure it exists in your local directory)
+COPY next.config.js ./
+
+# Copy the rest of the application
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=8080
 
-# Command to run the application
-CMD ["node", "index.js"]
+# Build the application
+RUN npm run build
+
+# Expose the port
+EXPOSE 8080
+
+# Start the application
+CMD ["npm", "start"]
