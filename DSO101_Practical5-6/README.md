@@ -95,6 +95,10 @@ Add credentials:
 
 ![pipelinesuccess](./Assets/Screenshot%202025-05-31%20at%203.10.26 PM.png)
 
+#### 4. Images in dockerhub
+
+![dockerhubimages](./Assets/dockerimage.png)
+
 
 ### Challenges Faced 
 
