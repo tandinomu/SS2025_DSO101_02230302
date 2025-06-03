@@ -105,7 +105,7 @@ Expected Result:
 - **Impact**: Pipeline failed at Docker build stage
 - **Diagnosis**: Docker located at `/usr/local/bin/docker` but Jenkins couldn't access it
 
-
+![error1](./images/error.png)
 
 ### 3. **PATH Configuration for Jenkins**
 - **Issue**: Jenkins environment didn't include Docker installation paths
