@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_USERNAME = 'tandinomu'  // Make sure this matches your Docker Hub username exactly!
+        DOCKER_USERNAME = 'tandinomu'  
         IMAGE_NAME = 'my-jenkins-pipeline-app'
         CONTAINER_NAME = 'my-jenkins-app'
     }

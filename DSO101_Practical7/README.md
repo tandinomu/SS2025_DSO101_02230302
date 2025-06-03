@@ -68,7 +68,7 @@ console.log("Hello from Node.js Application!");
 console.log("Server started successfully at:", new Date().toLocaleString());
 ```
 
-### Step 2: Pipeline Configuration
+### Phase 4: Pipeline Configuration
 
 **Created `Jenkinsfile` in the application root directory:**
 
